@@ -1,7 +1,7 @@
 name: 'User-Blog Association'
 id: userblogassociation
 description: 'Assign a role and blog to a user specifically (and only) when the user interacts with that blog.'
-author_name: uiNNOVATIONS
+author_name: 'Dan Wolfgang, uiNNOVATIONS'
 author_link: http://uinnovations.com
 version: 1.0
 
@@ -16,4 +16,3 @@ init_app: $UserBlogAssociation::UserBlogAssociation::Init::init_app
 
 callbacks:
     api_post_save.author: $UserBlogAssociation::UserBlogAssociation::Plugin::post_save
-

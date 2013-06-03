@@ -12,10 +12,10 @@ sub init_app {
       unless $app->isa('MT::App')
           && ( $app->can('query') || $app->can('param') );
 
-    Sub::Install::reinstall_sub({ 
-        code => \&_commenter_loggedin, 
-        into => 'MT::App::Community', 
-        as   => 'commenter_loggedin', 
+    Sub::Install::reinstall_sub({
+        code => \&_commenter_loggedin,
+        into => 'MT::App::Community',
+        as   => 'commenter_loggedin',
     });
 }
 
@@ -28,7 +28,7 @@ sub _commenter_loggedin {
     my $q   = $app->param;
     my ($commenter, $commenter_blog_id) = @_;
 
-    # Create the user-blog association before returning the user to 
+    # Create the user-blog association before returning the user to
     # wherever they came from.
     require UserBlogAssociation::Plugin;
     UserBlogAssociation::Plugin::_create_association(
