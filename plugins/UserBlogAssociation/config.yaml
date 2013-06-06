@@ -3,7 +3,7 @@ id: userblogassociation
 description: 'Assign a role and blog to a user specifically (and only) when the user interacts with that blog.'
 author_name: 'Dan Wolfgang, uiNNOVATIONS'
 author_link: http://uinnovations.com
-version: 1.0
+version: 1.0.1
 
 blog_config_template:
     code: $UserBlogAssociation::UserBlogAssociation::Plugin::blog_config_template
