@@ -1,6 +1,7 @@
 package UserBlogAssociation::Plugin;
 
 use strict;
+use warnings;
 
 sub blog_config_template {
     my ($plugin, $param, $scope) = @_;
@@ -17,7 +18,9 @@ sub blog_config_template {
     <select name="saved_role_id">
         <option value="">None</option>
     <mt:Loop name="roles">
-        <option value="<mt:Var name="id">"<mt:If name="saved_role_id" eq="$id"> selected="selected"</mt:If>><mt:Var name="name"></option>
+        <option value="<mt:Var name="id">"
+            <mt:If name="saved_role_id" eq="$id"> selected="selected"</mt:If>
+            ><mt:Var name="name"></option>
     </mt:Loop>
     </select>
 </mtapp:Setting>
@@ -33,8 +36,12 @@ sub post_save {
     my $user = MT::App::Community::_login_user_commenter($app)
         or return $app->errtrans("Login required");
 
+    return 1 if !$user;
+
     # Create the association
     _create_association($app->param('blog_id'), $user);
+
+    1;
 }
 
 sub _create_association {
@@ -61,6 +68,14 @@ sub _create_association {
     # Create the user-role-blog association.
     require MT::Association;
     MT::Association->link( $user, $role, $blog );
+
+    MT->log({
+        level     => MT->model('log')->INFO(),
+        blog_id   => $blog->id,
+        author_id => $user->id,
+        message   => 'The User-Blog Association plugin assigned the role '
+            . $role->name . ' to this user.',
+    });
 }
 
 1;
